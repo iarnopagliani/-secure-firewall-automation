@@ -1,0 +1,20 @@
+- name: Create service account
+  hosts: all
+  vars:
+    project_id: terraform-vm-415814
+    service_account_name: example-ansible
+  
+  tasks:
+    - name: Create service account
+      google.cloud.gcp_iam_service_account:
+        name: "{{ service_account_name }}"
+        project: "{{ project_id }}"
+        display_name: "sa-1"
+        auth_kind: application
+        state: present
+      register: service_account
+    
+    - name: Read service account
+      debug:
+        msg: "{{ service_account.name }}"
+      when: service_account.name is defined

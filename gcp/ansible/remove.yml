@@ -1,0 +1,13 @@
+- name: Create service account
+  hosts: all
+  vars:
+    project_id: terraform-vm-415814
+    service_account_name: example-ansible
+  
+  tasks:
+    - name: Delete service account
+      google.cloud.gcp_iam_service_account:
+        name: "{{ service_account_name }}@{{project_id}}.iam.gserviceaccount.com"
+        project: "{{ project_id }}"
+        auth_kind: application
+        state: absent
